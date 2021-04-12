@@ -1,0 +1,19 @@
+logdir: log
+weightdir: models
+weight_pretrained: ''
+resultdir: results
+
+num_episodes: 5000
+max_steps: 500
+
+height: 20
+width: 10
+block_size: 20
+
+learning_rate: 0.0001
+batch_size: 512
+gamma: 0.99
+initial_eps: 1.0
+final_eps: 0.001
+num_decay_epochs: 2000
+capacity: 30000
