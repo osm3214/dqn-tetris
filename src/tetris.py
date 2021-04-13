@@ -195,11 +195,12 @@ class Tetris:
 
         num_cleared_lines = self.clear_lines(self.board)
 
-        current_value = - 0.5 * self.get_max_height() \
+        # current_value = - 0.5 * self.get_max_height() \
             # - 0.1 * self.get_num_holes() \
             # - 0.25 * self.get_total_bumpiness()
-        reward = current_value - self.last_value + num_cleared_lines ** 2 + 1
-        self.last_value = current_value
+        # reward = current_value - self.last_value + num_cleared_lines ** 2 + 1
+        reward = num_cleared_lines + 1
+        # self.last_value = current_value
 
         self.score += reward
         self.cleared_lines += num_cleared_lines

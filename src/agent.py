@@ -119,7 +119,6 @@ class Brain(object):
         self.model.eval()
         with torch.no_grad():
             predictions = self.model(next_states)[:, 0]
-            print(predictions)
         index = torch.argmax(predictions).item()
         action = next_actions[index]
         return action

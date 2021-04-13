@@ -145,6 +145,7 @@ for episode in range(num_episodes):
             break
 
 history_df = pd.DataFrame(history)
+os.makedirs(resultdir, exist_ok=True)
 history_df.to_csv(os.path.join(resultdir, csvfile), index=False)
 
 # plot_result(history, dirname=resultdir, prefix=experiment_name)
