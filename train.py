@@ -107,7 +107,8 @@ for episode in range(num_episodes):
     state = torch.from_numpy(state)
 
     total_reward = 0
-    for step in range(max_steps):
+    step = 0
+    while True:
         next_steps = env.get_next_states()
         next_actions, next_states = zip(*next_steps.items())
         next_states = np.stack(next_states)[:, np.newaxis].astype(np.float32)
@@ -129,7 +130,8 @@ for episode in range(num_episodes):
 
         if done:
             message = f"Episode: {episode:4d}/{num_episodes:04d}\t" + \
-                f"Step: {step:4d}/{max_steps:3d}\t" + \
+                f"lr: {agent.brain.scheduler.get_last_lr()}\t" + \
+                f"Step: {step:4d}\t" + \
                 f"Cleared lines: {env.cleared_lines:3d}\t" + \
                 f"Total Reward: {total_reward}"
             logger.info(message)
@@ -137,12 +139,14 @@ for episode in range(num_episodes):
             history["total_reward"].append(total_reward)
             history["cleared_lines"].append(env.cleared_lines)
 
-            if step > max_step - 10:
+            if step >= max_step:
                 os.makedirs(weightdir, exist_ok=True)
                 max_step = step
                 agent.save_model(os.path.join(weightdir, weightfile))
                 logger.info("Model saved.")
             break
+        step += 1
+    agent.brain.scheduler.step()
 
 history_df = pd.DataFrame(history)
 os.makedirs(resultdir, exist_ok=True)
