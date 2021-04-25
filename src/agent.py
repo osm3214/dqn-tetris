@@ -59,9 +59,9 @@ class Brain(object):
         self.memory = ReplayMemory(capacity)
         self.model = TetrisNet()
         self.model.to(device)
-        # self.optimizer = Adam(self.model.parameters(), lr=self.lr)
-        self.optimizer = SGD(self.model.parameters(), lr=self.lr)
-        self.scheduler = MultiStepLR(self.optimizer, milestones=[2500, 3500, 4500], gamma=0.1)
+        self.optimizer = Adam(self.model.parameters(), lr=self.lr)
+        # self.optimizer = SGD(self.model.parameters(), lr=self.lr)
+        self.scheduler = MultiStepLR(self.optimizer, milestones=[2500, 3750], gamma=0.1)
         self.criterion = nn.MSELoss()
 
     def replay(self) -> None:
